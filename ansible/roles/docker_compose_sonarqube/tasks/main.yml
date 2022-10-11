@@ -1,0 +1,17 @@
+- name: Make docker dir
+  file:
+    path: /home/ubuntu/sonar_dir
+    state: directory
+
+- name: Copy Docker Compose files
+  copy:
+    src: "{{ item }}"
+    dest: /home/ubuntu/sonar_dir/
+  loop:
+  - docker-compose.yml
+
+- name: deploy Docker Compose stack
+  shell:
+    cmd: "docker-compose -f docker-compose.yml  up -d"
+    chdir: /home/ubuntu/sonar_dir/
+

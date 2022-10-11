@@ -1,0 +1,12 @@
+    - name: Creates directory for nginx ssl certifications
+      file:
+         path: /etc/nginx/sites-enabled
+         state: directory
+
+    - name: Copy nginx site.conf
+      copy:
+        src: reverse_proxy.conf
+        dest: /etc/nginx/sites-enabled/reverse_proxy.conf
+        owner: root
+        group: root
+        mode: '0644'

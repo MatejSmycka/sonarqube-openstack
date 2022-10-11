@@ -1,0 +1,12 @@
+---
+- name: Update, install and run SonarQube deamon.
+  hosts: sonarqube_inst
+  become: yes
+  vars_files:
+    - host_vars/sonarqube_inst_vars
+  roles:
+    - common
+    - cert_gen
+    - nginx_files
+    - docker_setup
+    - docker_compose_sonarqube

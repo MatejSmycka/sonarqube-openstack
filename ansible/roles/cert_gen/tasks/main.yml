@@ -1,0 +1,27 @@
+- name: Creates directory for nginx ssl certifications
+  file:
+    path: /etc/ssl/private
+    state: directory
+
+- name: Change permission on the directory
+  file:
+    path: /etc/ssl/private
+    state: directory
+    mode: 0700
+
+- name: Generate private key with default param.
+  openssl_privatekey:
+      path: /etc/ssl/private/nginx-selfsigned.key
+      size: 4096
+      type: RSA
+
+- name: Generate a Self Signed OpenSSL certificate
+  openssl_certificate:
+    path: /etc/ssl/private/nginx-selfsigned.crt
+    privatekey_path: /etc/ssl/private/nginx-selfsigned.key
+    provider: selfsigned
+
+- name: Generate Diffie-Hellman parameters with the size 2048 bits
+  community.crypto.openssl_dhparam:
+    path: /etc/ssl/private/dhparam.pem
+    size: 2048
